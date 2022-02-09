@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  nginx:
+      build:
+          context: ./
+          dockerfile: dockerfiles/Nginx.Dockerfile    #expand image with our settings
+      ports:
+          - 8000:80
+      links:
+          - fpm
+      volumes: 
+          - ./:/var/www/laravel-docker        # we mount the folder with the project in the container , cuz it also work with file system
+  fpm:
+      build:
+          context: ./
+          dockerfile: dockerfiles/Fpm.Dockerfile
+      volumes:
+          - ./:/var/www/laravel-docker
+      env_file:
+      - .env 
+      links:
+          - mysql
+  mysql:
+      image: mysql:5.7
+      ports:
+          - 33061:3306
+      environment:
+          - MYSQL_ROOT_PASSWORD=root 
+          - MYSQL_DATABASE=laraveldb
+
