@@ -10,13 +10,13 @@ services:
       links:
           - fpm
       volumes: 
-          - ./:/var/www/laravel-docker        # we mount the folder with the project in the container , cuz it also work with file system
+          - ./:/var/www/laravel-docker.        # we mount the folder with the project in the container , cuz it also work with file system
   fpm:
       build:
           context: ./
           dockerfile: dockerfiles/Fpm.Dockerfile
       volumes:
-          - ./:/var/www/laravel-docker
+          - ./:/var/www/laravel-docker.
       env_file:
       - .env 
       links:
